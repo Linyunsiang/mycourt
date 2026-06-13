@@ -1,0 +1,31 @@
+# Deny-by-default home repo: ignore everything, then allow only
+# the gstack team-mode files. This prevents `git add .` from ever
+# staging credentials, transcripts, or session data.
+
+# Ignore everything at the repo root
+/*
+
+# Allow this gitignore and the team CLAUDE.md
+!/.gitignore
+!/CLAUDE.md
+
+# Descend into .claude but ignore its contents by default
+!/.claude
+/.claude/*
+
+# ...except the gstack enforcement hook and the (non-secret) settings.json
+!/.claude/hooks
+/.claude/hooks/*
+!/.claude/hooks/check-gstack.sh
+!/.claude/settings.json
+
+# Never track these, even if rules above change
+.claude/.credentials.json
+.claude/settings.local.json
+.claude/projects/
+.claude/sessions/
+.claude/session-env/
+.claude/shell-snapshots/
+.claude/history.jsonl
+.claude/skills/
+.claude/skills/gstack/
